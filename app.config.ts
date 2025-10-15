@@ -12,9 +12,9 @@ export default defineConfig(withSolidBase(
   },
   // SolidBase config
   {
-    title: "Eros Author — Charles Boswell",
-    titleTemplate: ":title - Eros Author",
-    description: "Official site for the Eros author imprint by Charles Boswell",
+    title: "Ἔρως Author",
+    titleTemplate: ":title - Ἔρως",
+    description: "Official website for author Ἔρως - bold adult-fantasy stories",
     themeConfig: {
       sidebar: {
         "/": [

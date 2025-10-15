@@ -1,6 +1,6 @@
-# Eros Author — Charles Boswell
+# Ἔρως Author
 
-Official website for the Eros author imprint by Charles Boswell. Built with SolidStart and optimized for Bun.
+Official website for author Ἔρως. Built with SolidStart and optimized for Bun.
 
 ## Tech Stack
 

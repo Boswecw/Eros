@@ -6,7 +6,7 @@ export default function Home() {
       <div class="header-gradient -m-6 mb-6 rounded-t-2xl p-8">
         <h1 class="text-4xl font-extrabold">High Heat. High Stakes. High Story.</h1>
         <p class="mt-3 text-lg text-white/90">
-          Welcome to <strong>Eros</strong>, the bold adult-fantasy imprint by <em>Charles Boswell</em>.
+          Welcome to the world of <strong>Ἔρως</strong>, where bold adult-fantasy comes to life.
         </p>
       </div>
 
