@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Eros Light-Purple Theme ---------- */
+
+@layer base {
+  :root {
+    color-scheme: light dark;
+  }
+
+  body {
+    @apply bg-bg text-text;
+  }
+
+  /* Dark mode overrides */
+  @media (prefers-color-scheme: dark) {
+    body {
+      @apply bg-gray-900 text-gray-100;
+    }
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-md px-4 py-2
+           bg-eros text-white hover:bg-eros-dark active:scale-[0.99]
+           transition-all duration-200;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center rounded-md px-4 py-2
+           border border-border text-eros hover:bg-eros-light
+           transition-all duration-200;
+  }
+
+  .card {
+    @apply rounded-2xl border border-border bg-surface p-6 shadow-sm;
+  }
+
+  .link {
+    @apply text-eros hover:text-eros-dark underline-offset-4 hover:underline
+           transition-colors duration-200;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full bg-eros-rose px-3 py-1
+           text-xs text-eros-dark font-medium;
+  }
+
+  .header-gradient {
+    @apply bg-header-gradient text-white;
+  }
+}
+@theme {
+  /* Brand */
+  --color-eros:        #A78BFA; /* lavender (primary) */
+  --color-eros-light:  #E9D5FF; /* soft lilac */
+  --color-eros-dark:   #7C3AED; /* deep orchid */
+  --color-eros-accent: #F0ABFC; /* blush mauve */
+  --color-eros-rose:   #FCE7F3; /* pastel rose */
+
+  /* Neutrals */
+  --color-bg:      #F9FAFB; /* whisper gray */
+  --color-surface: #FFFFFF; /* white */
+  --color-border:  #EDE9FE; /* lavender tint */
+  --color-text:    #1F2937; /* charcoal */
+  --color-muted:   #4B5563; /* muted gray */
+}
+
+/* Auto dark-mode (optional). Tweak to taste. */
+@media (prefers-color-scheme: dark) {
+  @theme {
+    --color-bg:      #0B0B0D;
+    --color-surface: #121217;
+    --color-border:  #2A233A;
+    --color-text:    #E6E6F0;
+    --color-muted:   #B7B7C9;
+
+    /* Slightly richer brand in dark */
+    --color-eros:      #B69CFF;
+    --color-eros-light:#DCCAFE;
+    --color-eros-dark: #8B5CF6;
+  }
+}
+
+/* Base: apply background/text everywhere */
+@layer base {
+  :root { color-scheme: light dark; }
+  body { 
+    @apply bg-[--color-bg] text-[--color-text];
+  }
+}
+
+/* Reusable components */
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-md px-4 py-2
+           bg-eros text-white hover:bg-eros-dark active:scale-[.99]
+           transition;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center rounded-md px-4 py-2
+           border border-[--color-border] text-eros hover:bg-eros-light
+           transition;
+  }
+  .card {
+    @apply rounded-2xl border border-[--color-border] bg-[--color-surface] p-6 shadow-sm;
+  }
+  .link {
+    @apply text-eros hover:text-eros-dark underline-offset-4 hover:underline;
+  }
+  .chip {
+    @apply inline-flex items-center rounded-full bg-eros-rose px-3 py-1 text-xs text-eros-dark;
+  }
+}
+
+/* Fancy header gradient utility */
+.header-gradient {
+  @apply bg-gradient-to-r from-eros-light via-eros to-eros-dark text-white;
+}

@@ -1,0 +1,25 @@
+# Bun configuration for SolidStart project
+[install]
+# Use exact versions for better reproducibility
+exact = true
+
+# Cache packages for faster installs
+cache = true
+
+# Prefer offline packages when available
+prefer-offline = true
+
+# Auto-install peer dependencies
+auto = true
+
+[install.scopes]
+# Optimize for SolidJS ecosystem
+"@solidjs" = { registry = "https://registry.npmjs.org/" }
+"@kobalte" = { registry = "https://registry.npmjs.org/" }
+
+[run]
+# Use Bun's runtime for better performance
+bun = true
+
+# Enable shell completion
+shell = "bash"
