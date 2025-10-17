@@ -17,33 +17,43 @@ export default function AgeGate(props: AgeGateProps) {
 
   // Initialize client-side only
   onMount(() => {
-    setIsClient(true);
+    // Use requestAnimationFrame to ensure DOM is fully ready
+    requestAnimationFrame(() => {
+      setIsClient(true);
 
-    // Check if current route should bypass age gate
-    if (shouldBypassAgeGate(window.location.pathname)) {
-      setIsVerified(true);
-      setShowGate(false);
-      return;
-    }
+      try {
+        // Check if current route should bypass age gate
+        if (shouldBypassAgeGate(window.location.pathname)) {
+          setIsVerified(true);
+          setShowGate(false);
+          return;
+        }
 
-    // Check if user has already verified (stored in localStorage)
-    const verified = localStorage.getItem(AGE_GATE_CONFIG.storageKey);
-    const verifiedDate = localStorage.getItem(AGE_GATE_CONFIG.storageDateKey);
+        // Check if user has already verified (stored in localStorage)
+        const verified = localStorage.getItem(AGE_GATE_CONFIG.storageKey);
+        const verifiedDate = localStorage.getItem(AGE_GATE_CONFIG.storageDateKey);
 
-    if (verified === "true" && verifiedDate) {
-      const storedDate = new Date(verifiedDate);
-      const now = new Date();
-      const daysDiff = (now.getTime() - storedDate.getTime()) / (1000 * 3600 * 24);
+        if (verified === "true" && verifiedDate) {
+          const storedDate = new Date(verifiedDate);
+          const now = new Date();
+          const daysDiff = (now.getTime() - storedDate.getTime()) / (1000 * 3600 * 24);
 
-      // Verification expires after configured days
-      if (daysDiff < AGE_GATE_CONFIG.verificationExpiryDays) {
+          // Verification expires after configured days
+          if (daysDiff < AGE_GATE_CONFIG.verificationExpiryDays) {
+            setIsVerified(true);
+            setShowGate(false);
+          } else {
+            localStorage.removeItem(AGE_GATE_CONFIG.storageKey);
+            localStorage.removeItem(AGE_GATE_CONFIG.storageDateKey);
+          }
+        }
+      } catch (error) {
+        console.warn('Age gate initialization error:', error);
+        // If there's an error, just show the content
         setIsVerified(true);
         setShowGate(false);
-      } else {
-        localStorage.removeItem(AGE_GATE_CONFIG.storageKey);
-        localStorage.removeItem(AGE_GATE_CONFIG.storageDateKey);
       }
-    }
+    });
   });
 
   const calculateAge = (month: number, day: number, year: number): number => {
@@ -275,10 +285,10 @@ export default function AgeGate(props: AgeGateProps) {
         </div>
       </Show>
 
-      {/* Main Content - Only shown after verification or during SSR */}
-      <Show when={!isClient() || isVerified()}>
+      {/* Main Content - Always render during SSR, conditionally on client */}
+      <div style={{ display: isClient() && !isVerified() ? 'none' : 'block' }}>
         {props.children}
-      </Show>
+      </div>
     </>
   );
 }
