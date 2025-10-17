@@ -1,19 +1,38 @@
 import { A } from "@solidjs/router";
 import { getBookCoverUrl } from "~/utils/firebase-images";
+import { SEO } from "~/components/SEO";
+import { WebsiteSchema } from "~/components/StructuredData";
 
 export default function Home() {
   return (
-    <div class="space-y-14 md:space-y-16">
+    <>
+      <SEO
+        title="Home"
+        description="Welcome to Ἔρως - where passion becomes story and fantasy has no limits. Discover bold adult-fantasy romance novels that blend adventure with desire."
+        type="website"
+      />
+      <WebsiteSchema />
+
+      <div class="space-y-14 md:space-y-16">
 
       {/* BANNER IMAGE — top of page */}
       <section class="w-full">
-        <img
-          src="https://firebasestorage.googleapis.com/v0/b/endless-fire-467204-n2.firebasestorage.app/o/Eros%2FHero_Banner.png?alt=media&token=dcf8616a-2cdf-47a4-9ec6-eb7fa54713a5"
-          alt="Eros Banner"
-          class="w-full h-auto rounded-3xl shadow-lg"
-          loading="eager"
-          decoding="async"
-        />
+        <picture>
+          <source
+            srcset="https://firebasestorage.googleapis.com/v0/b/endless-fire-467204-n2.firebasestorage.app/o/Eros%2FHero_Banner.png?alt=media&token=dcf8616a-2cdf-47a4-9ec6-eb7fa54713a5"
+            type="image/png"
+          />
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/endless-fire-467204-n2.firebasestorage.app/o/Eros%2FHero_Banner.png?alt=media&token=dcf8616a-2cdf-47a4-9ec6-eb7fa54713a5"
+            alt="Ἔρως Author - Welcome to the World of Eros - Bold Adult Fantasy Romance"
+            class="w-full h-auto rounded-3xl shadow-lg"
+            loading="eager"
+            decoding="async"
+            width="1200"
+            height="400"
+            fetchpriority="high"
+          />
+        </picture>
       </section>
 
       {/* INTRO COPY — separated under banner */}
@@ -40,18 +59,22 @@ export default function Home() {
         </div>
 
         {/* CTAs */}
-        <div class="flex flex-wrap justify-center gap-4">
+        <div class="flex flex-wrap justify-center gap-4" role="group" aria-label="Main navigation actions">
           <A
             href="/books"
             class="inline-flex items-center justify-center rounded-xl px-8 py-3 text-lg font-semibold
-                   bg-eros-500 hover:bg-eros-600 text-white shadow-md shadow-eros-400/40 transition"
+                   bg-eros-500 hover:bg-eros-600 text-white shadow-md shadow-eros-400/40 transition
+                   focus:outline-none focus:ring-2 focus:ring-eros-400 focus:ring-offset-2"
+            aria-label="Browse all books by Ἔρως"
           >
             Browse Books
           </A>
           <A
             href="/newsletter"
             class="inline-flex items-center justify-center rounded-xl px-8 py-3 text-lg font-semibold
-                   border border-eros-300 text-eros-700 hover:bg-eros-100 transition"
+                   border border-eros-300 text-eros-700 hover:bg-eros-100 transition
+                   focus:outline-none focus:ring-2 focus:ring-eros-400 focus:ring-offset-2"
+            aria-label="Subscribe to newsletter for updates"
           >
             Join Newsletter
           </A>
@@ -92,18 +115,22 @@ export default function Home() {
       </section>
 
       {/* FEATURED BOOK */}
-      <section class="card mt-12">
+      <section class="card mt-12" aria-labelledby="featured-book-heading">
         <div class="flex items-start gap-2 mb-6">
-          <span class="text-2xl">🔥</span>
-          <h2 class="text-3xl font-bold text-eros-dark dark:text-eros-300">The Debut Title</h2>
+          <span class="text-2xl" aria-hidden="true">🔥</span>
+          <h2 id="featured-book-heading" class="text-3xl font-bold text-eros-dark dark:text-eros-300">The Debut Title</h2>
         </div>
 
         <div class="grid md:grid-cols-2 gap-8 items-start">
           <div class="flex justify-center md:justify-start">
             <img
               src={getBookCoverUrl("high-card-stud")}
-              alt="Cover: High Card Stud Pokes Her"
+              alt="Book Cover: High Card Stud Pokes Her - Erotic Romance Novel by Ἔρως"
               class="w-72 h-auto rounded-xl shadow-2xl ring-1 ring-black/10"
+              loading="lazy"
+              decoding="async"
+              width="288"
+              height="432"
             />
           </div>
 
@@ -152,18 +179,22 @@ export default function Home() {
       </section>
 
       {/* COMING SOON BOOK */}
-      <section class="card mt-12">
+      <section class="card mt-12" aria-labelledby="coming-soon-heading">
         <div class="flex items-start gap-2 mb-6">
-          <span class="text-2xl">📅</span>
-          <h2 class="text-3xl font-bold text-eros-dark dark:text-eros-300">Coming Soon</h2>
+          <span class="text-2xl" aria-hidden="true">📅</span>
+          <h2 id="coming-soon-heading" class="text-3xl font-bold text-eros-dark dark:text-eros-300">Coming Soon</h2>
         </div>
 
         <div class="grid md:grid-cols-2 gap-8 items-start">
           <div class="flex justify-center md:justify-start">
             <img
               src={getBookCoverUrl("sloppy-jo")}
-              alt="Cover: Sloppy Jo"
+              alt="Book Cover: Sloppy Jo - Coming Soon Erotic Romance Novel by Ἔρως"
               class="w-72 h-auto rounded-xl shadow-2xl ring-1 ring-black/10"
+              loading="lazy"
+              decoding="async"
+              width="288"
+              height="432"
             />
           </div>
 
@@ -230,6 +261,7 @@ export default function Home() {
           No shame. No apologies. Just power and pleasure written with heart.
         </p>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

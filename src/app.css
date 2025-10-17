@@ -11,10 +11,20 @@
 
   body {
     @apply bg-bg text-text dark:bg-slate-900 dark:text-slate-100;
+    font-display: swap; /* Improve font loading performance */
   }
 
   html {
     @apply transition-colors duration-300;
+  }
+
+  /* Prevent layout shift during font loading */
+  .font-loading {
+    visibility: hidden;
+  }
+
+  .fonts-loaded .font-loading {
+    visibility: visible;
   }
 }
 
