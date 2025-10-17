@@ -2,25 +2,47 @@ export default function Contact() {
   return (
     <div class="max-w-2xl mx-auto space-y-8">
       {/* Contact Form */}
-      <form action="https://formspree.io/f/yourFormId" method="post" class="card space-y-4">
-        <h1 class="text-xl font-semibold text-eros-dark">Contact Ἔρως</h1>
+      <form
+        name="contact"
+        method="POST"
+        action="/contact-success"
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+        class="card space-y-4"
+      >
+        {/* Hidden fields for Netlify */}
+        <input type="hidden" name="form-name" value="contact" />
+        <div style="display: none;">
+          <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+        </div>
+
+        <h1 class="text-xl font-semibold text-eros-dark dark:text-eros-300">Contact Ἔρως</h1>
         <input
           name="name"
+          type="text"
+          required
           placeholder="Your name"
-          class="w-full rounded-md border border-border bg-surface px-3 py-2 text-text focus:border-eros focus:outline-none focus:ring-2 focus:ring-eros/20"
+          class="w-full rounded-md border border-border bg-surface px-3 py-2 text-text
+                 focus:border-eros focus:outline-none focus:ring-2 focus:ring-eros/20
+                 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200"
         />
         <input
           name="email"
           type="email"
           required
           placeholder="you@example.com"
-          class="w-full rounded-md border border-border bg-surface px-3 py-2 text-text focus:border-eros focus:outline-none focus:ring-2 focus:ring-eros/20"
+          class="w-full rounded-md border border-border bg-surface px-3 py-2 text-text
+                 focus:border-eros focus:outline-none focus:ring-2 focus:ring-eros/20
+                 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200"
         />
         <textarea
           name="message"
           rows={5}
+          required
           placeholder="Your message..."
-          class="w-full rounded-md border border-border bg-surface px-3 py-2 text-text focus:border-eros focus:outline-none focus:ring-2 focus:ring-eros/20"
+          class="w-full rounded-md border border-border bg-surface px-3 py-2 text-text
+                 focus:border-eros focus:outline-none focus:ring-2 focus:ring-eros/20
+                 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200"
         />
         <button type="submit" class="btn-primary w-full">Send Message</button>
       </form>

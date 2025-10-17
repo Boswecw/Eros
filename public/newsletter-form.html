@@ -4,11 +4,19 @@
   <title>Newsletter Form - Hidden for Netlify</title>
 </head>
 <body>
-  <!-- This form is hidden and used only for Netlify form detection -->
+  <!-- These forms are hidden and used only for Netlify form detection -->
   <form name="newsletter" netlify netlify-honeypot="bot-field" method="POST" action="/newsletter-success" hidden>
     <input type="hidden" name="form-name" value="newsletter" />
     <input type="email" name="email" required />
     <input type="text" name="name" />
+    <input name="bot-field" />
+  </form>
+
+  <form name="contact" netlify netlify-honeypot="bot-field" method="POST" action="/contact-success" hidden>
+    <input type="hidden" name="form-name" value="contact" />
+    <input type="text" name="name" required />
+    <input type="email" name="email" required />
+    <textarea name="message" required></textarea>
     <input name="bot-field" />
   </form>
 </body>
