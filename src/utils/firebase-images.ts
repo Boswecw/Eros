@@ -2,23 +2,22 @@
 
 const FIREBASE_BASE_URL = "https://firebasestorage.googleapis.com/v0/b/endless-fire-467204-n2.firebasestorage.app/o/Eros%2F";
 
-// Known book cover mappings - updated with PNG images
+// Known book cover mappings - updated with WebP images for better performance
 const BOOK_COVER_MAPPINGS: Record<string, string> = {
-  "high-card-stud": "High_Card_Stud_Poke_Her_book_cover.png", // Updated to PNG format
-  "sloppy-jo": "Sloppy_Jo_Book_over.png", // Updated to PNG format (note: filename has "over" not "Cover")
+  "high-card-stud": "High_Card_Stud_Poke_Her_book_cover.webp", // Updated to WebP format for better performance
+  "sloppy-jo": "Sloppy_Jo_Book_over.webp", // Updated to WebP format (note: filename has "over" not "Cover")
   // Add more mappings here as you upload new book covers
-  // Format: "book-id": "Title_Book_Cover.png"
+  // Format: "book-id": "Title_Book_Cover.webp"
 
   // Examples for future books:
-  // "new-book-title": "New_Book_Title_Book_Cover.png",
-  // "another-book": "Another_Book_Book_Cover.png",
+  // "new-book-title": "New_Book_Title_Book_Cover.webp",
+  // "another-book": "Another_Book_Book_Cover.webp",
 };
 
-// Known tokens for each image (updated with new PNG tokens)
+// Known tokens for each image (auto-detected during build for WebP images)
 const BOOK_COVER_TOKENS: Record<string, string> = {
-  "high-card-stud": "e6af12af-0d3d-4c15-b8e7-7d076d7443cb",
-  "sloppy-jo": "4f8f9f38-987a-4756-a5c5-292a2cb5705d",
-  // Add tokens for new books here when you upload them
+  // Tokens will be auto-detected for WebP images during build
+  // Add manual tokens here only if auto-detection fails
 };
 
 /**
@@ -51,21 +50,21 @@ export function getBookCoverUrl(bookId: string, token?: string): string {
     return buildFirebaseUrl(fileName, storedToken);
   }
 
-  // Standard image formats (png, jpg, jpeg, gif, webp) - now we have PNG files!
+  // Standard image formats (webp, png, jpg, jpeg, gif) - now optimized with WebP!
   return buildFirebaseUrl(fileName, storedToken);
 }
 
 /**
  * Generate a book cover filename from book ID
- * Converts "high-card-stud" to "High_Card_Stud_Book_Cover.png"
+ * Converts "high-card-stud" to "High_Card_Stud_Book_Cover.webp" (WebP preferred for performance)
  */
 function generateBookCoverFileName(bookId: string): string {
   const titleCase = bookId
     .split('-')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join('_');
-  
-  return `${titleCase}_Book_Cover.png`;
+
+  return `${titleCase}_Book_Cover.webp`;
 }
 
 /**
@@ -283,8 +282,8 @@ function generateBookIdFromFilename(fileName: string): string | null {
  * @returns Object with book ID and cover URL
  */
 export function createBookWithCover(bookId: string, title: string, token?: string) {
-  // Auto-generate filename from title
-  const fileName = title.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, '') + '_Book_Cover.png';
+  // Auto-generate filename from title (WebP preferred for performance)
+  const fileName = title.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, '') + '_Book_Cover.webp';
 
   // Add to mappings
   BOOK_COVER_MAPPINGS[bookId] = fileName;
@@ -398,7 +397,7 @@ export async function getBookCoverUrlAuto(bookId: string): Promise<string> {
  * @returns Instructions for uploading to Firebase
  */
 export function getUploadInstructions(bookId: string, title: string): string {
-  const fileName = title.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, '') + '_Book_Cover.png';
+  const fileName = title.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, '') + '_Book_Cover.webp';
 
   return `
 📚 Firebase Upload Instructions for "${title}":

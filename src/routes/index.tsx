@@ -19,11 +19,15 @@ export default function Home() {
       <section class="w-full">
         <picture>
           <source
+            srcset="https://firebasestorage.googleapis.com/v0/b/endless-fire-467204-n2.firebasestorage.app/o/Eros%2FHero_Banner.webp?alt=media&token=59438e1f-7cbf-48bb-9d0a-8f6e5cd4e306"
+            type="image/webp"
+          />
+          <source
             srcset="https://firebasestorage.googleapis.com/v0/b/endless-fire-467204-n2.firebasestorage.app/o/Eros%2FHero_Banner.png?alt=media&token=dcf8616a-2cdf-47a4-9ec6-eb7fa54713a5"
             type="image/png"
           />
           <img
-            src="https://firebasestorage.googleapis.com/v0/b/endless-fire-467204-n2.firebasestorage.app/o/Eros%2FHero_Banner.png?alt=media&token=dcf8616a-2cdf-47a4-9ec6-eb7fa54713a5"
+            src="https://firebasestorage.googleapis.com/v0/b/endless-fire-467204-n2.firebasestorage.app/o/Eros%2FHero_Banner.webp?alt=media&token=59438e1f-7cbf-48bb-9d0a-8f6e5cd4e306"
             alt="Ἔρως Author - Welcome to the World of Eros - Bold Adult Fantasy Romance"
             class="w-full h-auto rounded-3xl shadow-lg"
             loading="eager"
