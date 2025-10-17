@@ -1,19 +1,14 @@
-import { createSignal } from "solid-js";
-import { useNavigate } from "@solidjs/router";
-
 export default function Newsletter() {
-  const [isSubmitting, setIsSubmitting] = createSignal(false);
-  const navigate = useNavigate();
-
-  const handleSubmit = async (e: Event) => {
-    setIsSubmitting(true);
+  const handleSubmit = (e: Event) => {
+    // Only handle client-side logic
+    if (typeof window === 'undefined') return;
 
     // For local testing, prevent default and simulate
     if (window.location.hostname === 'localhost') {
       e.preventDefault();
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      navigate("/newsletter-success");
-      setIsSubmitting(false);
+      setTimeout(() => {
+        window.location.href = "/newsletter-success";
+      }, 1000);
       return;
     }
 
@@ -52,7 +47,6 @@ export default function Newsletter() {
               class="w-full rounded-md border border-border bg-surface px-3 py-2 text-text
                      focus:border-eros focus:outline-none focus:ring-2 focus:ring-eros/20
                      dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200"
-              disabled={isSubmitting()}
             />
 
             <input
@@ -62,16 +56,14 @@ export default function Newsletter() {
               class="w-full rounded-md border border-border bg-surface px-3 py-2 text-text
                      focus:border-eros focus:outline-none focus:ring-2 focus:ring-eros/20
                      dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200"
-              disabled={isSubmitting()}
             />
           </div>
 
           <button
             type="submit"
             class="btn-primary w-full"
-            disabled={isSubmitting()}
           >
-            {isSubmitting() ? "Subscribing..." : "Subscribe"}
+            Subscribe
           </button>
 
           <p class="text-xs text-center text-muted dark:text-slate-400">No spam. Unsubscribe anytime.</p>
