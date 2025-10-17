@@ -6,18 +6,19 @@ export default function Newsletter() {
   const navigate = useNavigate();
 
   const handleSubmit = async (e: Event) => {
+    setIsSubmitting(true);
+
     // For local testing, prevent default and simulate
     if (window.location.hostname === 'localhost') {
       e.preventDefault();
-      setIsSubmitting(true);
       await new Promise(resolve => setTimeout(resolve, 1000));
       navigate("/newsletter-success");
       setIsSubmitting(false);
       return;
     }
 
-    // For production, let Netlify handle the form submission naturally
-    setIsSubmitting(true);
+    // For production, don't prevent default - let the browser handle the form submission
+    // Netlify will intercept and process the form
   };
 
   return (
