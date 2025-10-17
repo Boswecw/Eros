@@ -1,21 +1,62 @@
+import { createSignal } from "solid-js";
+
 export default function Newsletter() {
+  const [isSubmitting, setIsSubmitting] = createSignal(false);
+
   return (
     <div class="max-w-md mx-auto space-y-6">
-      <form action="https://formspree.io/f/yourFormId" method="post" class="card space-y-4">
-        <div class="text-center">
-          <h1 class="text-xl font-semibold text-eros-dark">Join Ἔρως Newsletter</h1>
-          <p class="text-sm text-muted mt-2">Get updates on new releases and exclusive content</p>
-        </div>
-        <input
-          name="email"
-          type="email"
-          required
-          placeholder="you@example.com"
-          class="w-full rounded-md border border-border bg-surface px-3 py-2 text-text focus:border-eros focus:outline-none focus:ring-2 focus:ring-eros/20"
-        />
-        <button type="submit" class="btn-primary w-full">Subscribe</button>
-        <p class="text-xs text-center text-muted">No spam. Unsubscribe anytime.</p>
-      </form>
+      <form
+        name="newsletter"
+        method="POST"
+        action="/newsletter-success"
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+        class="card space-y-4"
+      >
+          {/* Hidden fields for Netlify */}
+          <input type="hidden" name="form-name" value="newsletter" />
+          <div style="display: none;">
+            <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+          </div>
+
+          <div class="text-center">
+            <h1 class="text-xl font-semibold text-eros-dark dark:text-eros-300">Join Ἔρως Newsletter</h1>
+            <p class="text-sm text-muted dark:text-slate-400 mt-2">Get updates on new releases and exclusive content</p>
+          </div>
+
+          <div class="space-y-3">
+            <input
+              name="email"
+              type="email"
+              required
+              placeholder="you@example.com"
+              class="w-full rounded-md border border-border bg-surface px-3 py-2 text-text
+                     focus:border-eros focus:outline-none focus:ring-2 focus:ring-eros/20
+                     dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200"
+              disabled={isSubmitting()}
+            />
+
+            <input
+              name="name"
+              type="text"
+              placeholder="Your name (optional)"
+              class="w-full rounded-md border border-border bg-surface px-3 py-2 text-text
+                     focus:border-eros focus:outline-none focus:ring-2 focus:ring-eros/20
+                     dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200"
+              disabled={isSubmitting()}
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="btn-primary w-full"
+            disabled={isSubmitting()}
+          >
+            {isSubmitting() ? "Subscribing..." : "Subscribe"}
+          </button>
+
+          <p class="text-xs text-center text-muted dark:text-slate-400">No spam. Unsubscribe anytime.</p>
+        </form>
 
       {/* Alternative Contact */}
       <div class="card text-center">
