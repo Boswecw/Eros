@@ -1,14 +1,54 @@
 import { createSignal } from "solid-js";
+import { useNavigate } from "@solidjs/router";
 
 export default function Newsletter() {
   const [isSubmitting, setIsSubmitting] = createSignal(false);
+  const [email, setEmail] = createSignal("");
+  const [name, setName] = createSignal("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: Event) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      // For local testing, just simulate success
+      if (window.location.hostname === 'localhost') {
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network delay
+        navigate("/newsletter-success");
+        return;
+      }
+
+      // For production, use Netlify Forms
+      const formData = new FormData();
+      formData.append("form-name", "newsletter");
+      formData.append("email", email());
+      formData.append("name", name());
+
+      const response = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData as any).toString()
+      });
+
+      if (response.ok) {
+        navigate("/newsletter-success");
+      } else {
+        throw new Error("Form submission failed");
+      }
+    } catch (error) {
+      console.error("Newsletter submission error:", error);
+      alert("There was an error submitting the form. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div class="max-w-md mx-auto space-y-6">
       <form
         name="newsletter"
-        method="POST"
-        action="/newsletter-success"
+        onSubmit={handleSubmit}
         data-netlify="true"
         data-netlify-honeypot="bot-field"
         class="card space-y-4"
@@ -30,6 +70,8 @@ export default function Newsletter() {
               type="email"
               required
               placeholder="you@example.com"
+              value={email()}
+              onInput={(e) => setEmail(e.currentTarget.value)}
               class="w-full rounded-md border border-border bg-surface px-3 py-2 text-text
                      focus:border-eros focus:outline-none focus:ring-2 focus:ring-eros/20
                      dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200"
@@ -40,6 +82,8 @@ export default function Newsletter() {
               name="name"
               type="text"
               placeholder="Your name (optional)"
+              value={name()}
+              onInput={(e) => setName(e.currentTarget.value)}
               class="w-full rounded-md border border-border bg-surface px-3 py-2 text-text
                      focus:border-eros focus:outline-none focus:ring-2 focus:ring-eros/20
                      dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200"
